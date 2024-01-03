@@ -8,8 +8,11 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID      = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
-        GIT_CREDENTIALS        = credentials('Git')
         AWS_DEFAULT_REGION     = 'us-west-2'
+        GIT_CREDENTIALS        = credentials('Git')
+        TERRAFORM_PATH         = '/usr/local/bin/terraform'
+        WORKSPACE              = '/var/lib/jenkins/workspace/terraform-dp'
+        
     }
 
     agent any
@@ -28,10 +31,10 @@ pipeline {
         stage('Plan') {
             steps {
                 script {
-                    dir("TERRAFORM-JENKINS") {
-                        sh '/usr/local/bin/terraform init'
-                        sh '/usr/local/bin/terraform plan -out tfplan'
-                        sh '/usr/local/bin/terraform show -no-color tfplan > tfplan.txt'
+                    dir("${WORKSPACE}/Terraform_EKS_Jenkns") {
+                        sh "${/usr/local/bin/terraform} init"
+                        sh "${/usr/local/bin/terraform} plan -out tfplan"
+                        sh "${/usr/local/bin/terraform} show -no-color tfplan > tfplan.txt"
                     }
                 }
             }
