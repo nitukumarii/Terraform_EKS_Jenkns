@@ -2,14 +2,15 @@ pipeline {
     parameters {
         booleanParam(name: 'autoApprove', defaultValue: false, description: "Automatically run apply after generating plan?")
     }
-     tools {
+    tools {
         // Specify the name of the configured Git installation
         git 'Default'
     }
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION    = 'us-west-2'
+        AWS_ACCESS_KEY_ID      = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
+        GIT_CREDENTIALS        = credentials('nitukumarii')
+        AWS_DEFAULT_REGION     = 'us-west-2'
     }
 
     agent any
@@ -18,9 +19,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    dir("terraform") {
-                        git url: "https://github.com/nitukumarii/Terraform_EKS_Jenkns.git"
-                    }
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: '*/main']], 
+                              userRemoteConfigs: [[url: 'https://github.com/nitukumarii/Terraform_EKS_Jenkns.git', credentialsId: GIT_CREDENTIALS]])
                 }
             }
         }
