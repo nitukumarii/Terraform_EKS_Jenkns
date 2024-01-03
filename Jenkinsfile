@@ -10,8 +10,8 @@ pipeline {
         AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION     = 'us-west-2'
         GIT_CREDENTIALS        = credentials('Git')
-        TERRAFORM_PATH         = '/usr/local/bin/terraform' // Assuming Terraform is in the system PATH
-        WORKSPACE              = "${WORKSPACE}/Terraform_EKS_Jenkns"
+        TERRAFORM_PATH         = 'terraform' // Assuming Terraform is in the system PATH
+        WORKSPACE              = "${WORKSPACE}/Terraform_EKS_Jenkns/Terraform_EKS_Jenkns"
     }
 
     agent any
@@ -27,10 +27,21 @@ pipeline {
             }
         }
 
+        stage('Check Terraform Config') {
+            steps {
+                script {
+                    def terraformConfigPath = "${WORKSPACE}/main.tf"
+                    if (!fileExists(terraformConfigPath)) {
+                        error "Terraform configuration file not found at: ${terraformConfigPath}"
+                    }
+                }
+            }
+        }
+
         stage('Plan') {
             steps {
                 script {
-                    dir(terraform_eks_jenkns) {
+                    dir(WORKSPACE) {
                         sh "${TERRAFORM_PATH} init"
                         sh "${TERRAFORM_PATH} plan -out tfplan"
                         sh "${TERRAFORM_PATH} show -no-color tfplan > tfplan.txt"
@@ -45,7 +56,7 @@ pipeline {
             }
             steps {
                 script {
-                    def plan = readFile('tfplan.txt') // Use the relative path to the file
+                    def plan = readFile('tfplan.txt')
                     input message: "Do you want to apply the plan?",
                           parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
@@ -55,7 +66,7 @@ pipeline {
         stage('Apply') {
             steps {
                 script {
-                    dir(terraform_eks_jenkns) {
+                    dir(WORKSPACE) {
                         sh "${TERRAFORM_PATH} apply -input=false tfplan"
                     }
                 }
