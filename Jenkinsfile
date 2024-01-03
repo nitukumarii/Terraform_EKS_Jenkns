@@ -20,7 +20,7 @@ pipeline {
                 script {
                     checkout([$class: 'GitSCM', 
                               branches: [[name: '*/main']], 
-                              userRemoteConfigs: [[url: 'https://github.com/nitukumarii/Terraform_EKS_Jenkns.git', credentialsId: GIT_CREDENTIALS]]])
+                              userRemoteConfigs: [[url: 'https://github.com/nitukumarii/Terraform_EKS_Jenkns.git', credentialsId: GIT_CREDENTIALS]])
                 }
             }
         }
@@ -33,10 +33,6 @@ pipeline {
                         sh '/usr/local/bin/terraform plan -out tfplan'
                         sh '/usr/local/bin/terraform show -no-color tfplan > tfplan.txt'
                     }
-                        
-        
-        
-                    }
                 }
             }
         }
@@ -47,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    def plan = readFile('terraform/tfplan.txt')
+                    def plan = readFile('Terraform_EKS_Jenkns/tfplan.txt')
                     input message: "Do you want to apply the plan?",
                           parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
@@ -57,11 +53,11 @@ pipeline {
         stage('Apply') {
             steps {
                 script {
-                    dir("terraform") {
-                        sh 'terraform apply -input=false tfplan'
+                    dir("Terraform_EKS_Jenkns") {
+                        sh '/usr/local/bin/terraform apply -input=false tfplan'
                     }
                 }
             }
         }
     }
-
+}
