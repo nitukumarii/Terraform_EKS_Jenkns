@@ -32,6 +32,8 @@ pipeline {
                         sh '/usr/local/bin/terraform init'
                         sh '/usr/local/bin/terraform plan -out tfplan'
                         sh '/usr/local/bin/terraform show -no-color tfplan > tfplan.txt'
+                    }
+                        
         
         
                     }
