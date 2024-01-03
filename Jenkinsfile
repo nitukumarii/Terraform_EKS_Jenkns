@@ -30,7 +30,7 @@ pipeline {
         stage('Plan') {
             steps {
                 script {
-                    dir(WORKSPACE) {
+                    dir(terraform_eks_jenkns) {
                         sh "${TERRAFORM_PATH} init"
                         sh "${TERRAFORM_PATH} plan -out tfplan"
                         sh "${TERRAFORM_PATH} show -no-color tfplan > tfplan.txt"
@@ -55,7 +55,7 @@ pipeline {
         stage('Apply') {
             steps {
                 script {
-                    dir(WORKSPACE) {
+                    dir(terraform_eks_jenkns) {
                         sh "${TERRAFORM_PATH} apply -input=false tfplan"
                     }
                 }
