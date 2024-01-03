@@ -32,9 +32,11 @@ pipeline {
             steps {
                 script {
                     dir("${WORKSPACE}/Terraform_EKS_Jenkns") {
-                        sh "${/usr/local/bin/terraform} init"
-                        sh "${/usr/local/bin/terraform} plan -out tfplan"
-                        sh "${/usr/local/bin/terraform} show -no-color tfplan > tfplan.txt"
+                        sh "${TERRAFORM_PATH} init"
+                        sh "${TERRAFORM_PATH} plan -out tfplan"
+                        sh "${TERRAFORM_PATH} show -no-color tfplan > tfplan.txt"
+
+
                     }
                 }
             }
@@ -56,8 +58,8 @@ pipeline {
         stage('Apply') {
             steps {
                 script {
-                    dir("Terraform_EKS_Jenkns") {
-                        sh '/usr/local/bin/terraform apply -input=false tfplan'
+                    dir("${WORKSPACE}/Terraform_EKS_Jenkns") {
+                        sh "${TERRAFORM_PATH} apply -input=false tfplan"
                     }
                 }
             }
