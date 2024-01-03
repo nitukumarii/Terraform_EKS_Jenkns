@@ -10,7 +10,7 @@ pipeline {
         AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION     = 'us-west-2'
         GIT_CREDENTIALS        = credentials('Git')
-        TERRAFORM_PATH         = 'terraform' // Assuming Terraform is in the system PATH
+        TERRAFORM_PATH         = '/usr/local/bin/terraform' // Assuming Terraform is in the system PATH
         WORKSPACE              = "${WORKSPACE}/Terraform_EKS_Jenkns"
     }
 
