@@ -3,7 +3,6 @@ pipeline {
         booleanParam(name: 'autoApprove', defaultValue: false, description: "Automatically run apply after generating plan?")
     }
     tools {
-        // Specify the name of the configured Git installation
         git 'Default'
     }
     environment {
