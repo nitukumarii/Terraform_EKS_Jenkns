@@ -28,7 +28,7 @@ pipeline {
         stage('Plan') {
             steps {
                 script {
-                    dir("Terraform_EKS_Jenkns") {
+                    dir("TERRAFORM-JENKINS") {
                         sh '/usr/local/bin/terraform init'
                         sh '/usr/local/bin/terraform plan -out tfplan'
                         sh '/usr/local/bin/terraform show -no-color tfplan > tfplan.txt'
