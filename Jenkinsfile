@@ -10,9 +10,8 @@ pipeline {
         AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION     = 'us-west-2'
         GIT_CREDENTIALS        = credentials('Git')
-        TERRAFORM_PATH         = '/usr/local/bin/terraform'
-        WORKSPACE              = '/var/lib/jenkins/workspace/terraform-dp'
-        
+        TERRAFORM_PATH         = 'terraform' // Assuming Terraform is in the system PATH
+        WORKSPACE              = "${WORKSPACE}/Terraform_EKS_Jenkns"
     }
 
     agent any
@@ -31,12 +30,10 @@ pipeline {
         stage('Plan') {
             steps {
                 script {
-                    dir("${WORKSPACE}/Terraform_EKS_Jenkns") {
+                    dir(WORKSPACE) {
                         sh "${TERRAFORM_PATH} init"
                         sh "${TERRAFORM_PATH} plan -out tfplan"
                         sh "${TERRAFORM_PATH} show -no-color tfplan > tfplan.txt"
-
-
                     }
                 }
             }
@@ -48,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                    def plan = readFile('Terraform_EKS_Jenkns/tfplan.txt')
+                    def plan = readFile('tfplan.txt') // Use the relative path to the file
                     input message: "Do you want to apply the plan?",
                           parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
@@ -58,7 +55,7 @@ pipeline {
         stage('Apply') {
             steps {
                 script {
-                    dir("${WORKSPACE}/Terraform_EKS_Jenkns") {
+                    dir(WORKSPACE) {
                         sh "${TERRAFORM_PATH} apply -input=false tfplan"
                     }
                 }
