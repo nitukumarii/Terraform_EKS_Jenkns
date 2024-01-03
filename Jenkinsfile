@@ -2,7 +2,10 @@ pipeline {
     parameters {
         booleanParam(name: 'autoApprove', defaultValue: false, description: "Automatically run apply after generating plan?")
     }
-    
+     tools {
+        // Specify the name of the configured Git installation
+        git 'Default'
+    }
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
