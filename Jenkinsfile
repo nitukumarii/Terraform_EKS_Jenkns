@@ -11,7 +11,7 @@ pipeline {
         AWS_DEFAULT_REGION     = 'us-west-2'
         GIT_CREDENTIALS        = credentials('Git')
         TERRAFORM_PATH         = 'terraform' // Assuming Terraform is in the system PATH
-        WORKSPACE              = "${WORKSPACE}/Terraform_EKS_Jenkns/Terraform_EKS_Jenkns"
+        WORKSPACE              = "${WORKSPACE}/terraform-jenkins/Terraform_EKS_Jenkns"
     }
 
     agent any
