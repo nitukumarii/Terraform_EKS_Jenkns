@@ -10,6 +10,7 @@ pipeline {
         AWS_DEFAULT_REGION     = 'us-west-2'
         TERRAFORM_PATH = "/usr/bin"
         GIT_CREDENTIALS = credentials('Git')
+        WORKSPACE              = "${WORKSPACE}"
     }
 
     agent any
