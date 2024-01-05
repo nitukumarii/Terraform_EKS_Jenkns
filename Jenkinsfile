@@ -27,12 +27,17 @@ pipeline {
             }
         }
 
-        stage('init')
-            steps {
-                script {
+        stage('init'){
+            steps{
+                script{
                     sh "${TERRAFORM_PATH} init"
                 }
             }
+
+
+
+        }
+            
             
     }
 }
