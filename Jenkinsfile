@@ -5,6 +5,7 @@ pipeline {
     }
 
     environment{
+        TERRAFORM_PATH = "C:\Users\USER\Downloads\terraform.exe"
         GIT_CREDENTIALS = credentials('Git')
     }
 
@@ -25,5 +26,13 @@ pipeline {
                  
             }
         }
+
+        stage('init')
+            steps {
+                script {
+                    sh "$(TERRAFORM_PATH) init"
+                }
+            }
+            
     }
 }
