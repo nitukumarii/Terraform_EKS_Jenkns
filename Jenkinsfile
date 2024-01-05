@@ -27,6 +27,15 @@ pipeline {
             }
         }
 
+        stage('Debug') {
+    steps {
+        script {
+            sh 'echo $PATH'
+        }
+    }
+}
+
+
         stage('init'){
             steps{
                 script{
