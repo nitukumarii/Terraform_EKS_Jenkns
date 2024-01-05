@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment{
-        TERRAFORM_PATH = "C:\Users\USER\Downloads\terraform.exe"
+        TERRAFORM_PATH = "C:/Users/USER/Downloads/terraform.exe"
         GIT_CREDENTIALS = credentials('Git')
     }
 
