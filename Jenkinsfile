@@ -54,7 +54,8 @@ pipeline {
         stage('plan'){
             steps{
                 script{
-                    sh "${TERRAFORM_PATH}/terraform plan-out tfplan"
+                    sh "${TERRAFORM_PATH}/terraform plan -out=tfplan"
+                   
                 }
             }
 
