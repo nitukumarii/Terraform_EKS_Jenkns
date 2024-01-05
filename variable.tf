@@ -1,4 +1,4 @@
-variable "ec2_name" {
+variable "myinstance" {
   type = string 
   default = "your_default_value"
 }
