@@ -1,14 +1,14 @@
 pipeline {
-    agent any 
+     
     tools {
         git 'Default'
     }
 
-    credentials{
+    environment{
         GIT_CREDENTIALS = credentials('Git')
     }
 
-
+    agent any
 
     stages {
         stage('checkout') {
