@@ -30,7 +30,7 @@ pipeline {
         stage('init')
             steps {
                 script {
-                    sh "$(TERRAFORM_PATH) init"
+                    sh "${TERRAFORM_PATH} init"
                 }
             }
             
