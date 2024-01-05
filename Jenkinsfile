@@ -39,7 +39,7 @@ pipeline {
         stage('init'){
             steps{
                 script{
-                    sh "${TERRAFORM_PATH} init"
+                    sh "sudo ${TERRAFORM_PATH}/terraform init"
                 }
             }
 
