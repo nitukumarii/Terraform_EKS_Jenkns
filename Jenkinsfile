@@ -5,6 +5,9 @@ pipeline {
     }
 
     environment{
+        AWS_ACCESS_KEY_ID      = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY  = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_DEFAULT_REGION     = 'us-west-2'
         TERRAFORM_PATH = "/usr/bin"
         GIT_CREDENTIALS = credentials('Git')
     }
@@ -46,7 +49,25 @@ pipeline {
 
 
         }
-            
+
+        stage('plan'){
+            steps{
+                script{
+                    sh "${TERRAFORM_PATH}/terraform plan"
+                }
+            }
+
+
+
+        }  
+
+        stage('apply'){
+            steps{
+                script{
+                    sh "${TERRAFORM_PATH}/terraform apply -auto-approve"
+                }
+            }
+        }
             
     }
 }
