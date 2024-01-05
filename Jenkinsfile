@@ -1,5 +1,8 @@
 pipeline {
     agent any 
+    tools {
+        git 'Default'
+    }
 
     credentials{
         GIT_CREDENTIALS = credentials('Git')
