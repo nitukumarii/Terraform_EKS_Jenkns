@@ -63,13 +63,15 @@ pipeline {
 
         }  
 
-        stage('apply'){
-            steps{
-                script{
-                    sh "${TERRAFORM_PATH}/terraform apply -auto-approve"
-                }
-            }
-        }
+        stage('apply') {
+            steps {
+                script
+                {
+            sh "${TERRAFORM_PATH}/terraform apply tfplan"
             
+        }
+            }
+    
+      }
     }
 }

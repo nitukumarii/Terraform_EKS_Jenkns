@@ -10,10 +10,15 @@ filter {
     }
 owners = ["099720109477"] # Canonical
 }
+terraform {
+  required_providers {
+    aws = ">= 3.0.0"
+  }
+}
 # provision to us-east-2 region
 provider "aws" {
   region  = "us-east-2"
-  version = ">= 3.0.0"
+  
 }
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
