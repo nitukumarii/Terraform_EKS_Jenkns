@@ -10,16 +10,18 @@ filter {
     }
 owners = ["099720109477"] # Canonical
 }
+
 terraform {
   required_providers {
-    aws = ">= 3.0.0"
+    aws = "~> 3.0.0"
+    terraform = ">=v1.6.6"
   }
 }
-# provision to us-east-2 region
+
 provider "aws" {
   region  = "us-east-2"
-  
 }
+
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
