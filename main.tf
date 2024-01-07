@@ -1,7 +1,6 @@
 terraform {
   required_providers {
-    aws = "~> 3.0.0"
-    terraform = ">= 1.6.6"
+       source = "terraform.io/builtin/terraform"
   }
 }
 
