@@ -1,6 +1,8 @@
 terraform {
   required_providers {
-       source = "terraform.io/builtin/terraform"
+       aws = "~> 3.0.0"
+      
+
   }
 }
 
@@ -27,7 +29,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
-  key_name      = "app-ssh-key"
+  key_name      = "EC2create"
 
   tags = {
     Name = var.myinstance
